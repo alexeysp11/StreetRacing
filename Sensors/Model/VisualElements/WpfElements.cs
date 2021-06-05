@@ -11,13 +11,21 @@ namespace Sensors.VisualElements
         /// <summary>
         /// Allows to create TextBlock on Canvas
         /// </summary>
+        /// <param name="text">Text into TextBlock</param>
+        /// <param name="foregroundColor">Color of a text</param>
+        /// <param name="x">X coordinate of left top angle</param>
+        /// <param name="y">Y coordinate of left top angle</param>
+        /// <param name="width">Width of TextBlock</param>
+        /// <param name="height">Height of TextBlock</param>
+        /// <param name="fontSize">Size of text</param>
+        /// <returns>Instance of TextBlock</returns>
         public static TextBlock CreateTextBlockOnCanvas(string text, 
-            System.Windows.Media.Brush color, double x, double y, 
+            System.Windows.Media.Brush foregroundColor, double x, double y, 
             double width, double height, double fontSize)
         {
             TextBlock textBlock = new TextBlock();
             textBlock.Text = text;
-            textBlock.Foreground = color;
+            textBlock.Foreground = foregroundColor;
             textBlock.Width = width; 
             textBlock.Height = height; 
             textBlock.FontSize = fontSize; 
@@ -29,11 +37,18 @@ namespace Sensors.VisualElements
         /// <summary>
         /// Allows to create Line 
         /// </summary>
+        /// <param name="x1">X coordinate of point 1</param>
+        /// <param name="x2">X coordinate of point 2</param>
+        /// <param name="y1">Y coordinate of point 1</param>
+        /// <param name="y2">Y coordinate of point 2</param>
+        /// <param name="strokeColor">Color of stroke</param>
+        /// <param name="strokeThickness">Thickness of stroke</param>
+        /// <returns>Instance of Line</returns>
         public static Line CreateLine(double x1, double x2, double y1, double y2, 
-            System.Windows.Media.Brush color, double strokeThickness)
+            System.Windows.Media.Brush strokeColor, double strokeThickness)
         {
             Line myLine = new Line();
-            myLine.Stroke = color;
+            myLine.Stroke = strokeColor;
             myLine.X1 = x1;
             myLine.X2 = x2;
             myLine.Y1 = y1;
@@ -45,6 +60,15 @@ namespace Sensors.VisualElements
         /// <summary>
         /// Allows to draw ellipse on the canvas 
         /// </summary>
+        /// <param name="width">Width of Ellipse</param>
+        /// <param name="height">Height of Ellipse</param>
+        /// <param name="strokeThickness">Thickness of stroke</param>
+        /// <param name="strokeColor">Color of stroke</param>
+        /// <param name="fillColor">Color of fill</param>
+        /// <param name="canvasTop">Y coordinate of top left angle onto canvas</param>
+        /// <param name="canvasLeft">X coordinate of top left angle onto canvas</param>
+        /// <param name="name">Name of Ellipse (used for proving access to the ellipse in code)</param>
+        /// <returns>Instance of Ellipse</returns>
         public static Ellipse DrawEllipseOnCanvas(double width, double height, 
             double strokeThickness, System.Windows.Media.Brush strokeColor, 
             System.Windows.Media.Brush fillColor, double canvasTop, 
@@ -63,8 +87,15 @@ namespace Sensors.VisualElements
         }
 
         /// <summary>
-        /// Allows to create Line 
+        /// Allows to create Rectangle 
         /// </summary>
+        /// <param name="x">X coordinate of top left angle onto canvas</param>
+        /// <param name="y">Y coordinate of top left angle onto canvas</param>
+        /// <param name="width">Width of Rectangle</param>
+        /// <param name="height">Height of Rectangle</param>
+        /// <param name="strokeColor">Color of stroke</param>
+        /// <param name="fillColor">Color of fill</param>
+        /// <returns>Instance of Rectangle</returns>
         public static Rectangle DrawRectangleOnCanvas(double x, double y, 
             double width, double height, System.Windows.Media.Brush strokeColor, 
             System.Windows.Media.Brush fillColor)

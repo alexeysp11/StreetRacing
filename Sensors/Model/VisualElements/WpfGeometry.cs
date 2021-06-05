@@ -13,6 +13,8 @@ namespace Sensors.VisualElements
         /// <summary>
         /// Allows to find intersection point between two lines 
         /// </summary>
+        /// <param name="line1">Instance of line 1</param>
+        /// <param name="line2">Instance of line 2</param>
         public static void IntersectionBetweenTwoLines(Line line1, Line line2)
         {
 
@@ -21,6 +23,13 @@ namespace Sensors.VisualElements
         /// <summary>
         /// Allows to find intersection point between a line and an ellipse 
         /// </summary>
+        /// <remarks>
+        /// This method is not implemented correctly, try to avoid to use it
+        /// </remarks>
+        /// <param name="line">Instance of Line</param>
+        /// <param name="ellipse">Instance of Ellipse</param>
+        /// <param name="point1">Point 1 of an intersection</param>
+        /// <param name="point2">Point 2 of an intersection</param>
         public static void IntersectionBetweenLineAndEllipse(Line line, Ellipse ellipse, 
             out Point point1, out Point point2)
         {
@@ -70,6 +79,9 @@ namespace Sensors.VisualElements
         /// <summary>
         /// Rotates a point using rotation matrix
         /// </summary>
+        /// <param name="xPoint">X coordinate of a point</param>
+        /// <param name="yPoint">Y coordinate of a point</param>
+        /// <param name="radians">Angle of rotation in radians</param>
         public static void RotatePoint(ref double xPoint, ref double yPoint, 
             double radians)
         {
@@ -81,7 +93,7 @@ namespace Sensors.VisualElements
         /// Rotates a point using distance to the center of rotation and angle in radians
         /// </summary>
         /// <param name="distance">Radius of rotation</param>
-        /// <param name="radians">Angles of rotation in radians</param>
+        /// <param name="radians">Angle of rotation in radians</param>
         /// <param name="xPoint">X-coordinate of a point after rotation</param>
         /// <param name="yPoint">Y-coordinate of a point after rotation</param>
         public static void RotatePoint(double distance, double radians, 
@@ -100,6 +112,7 @@ namespace Sensors.VisualElements
         /// <param name="line">Line that needs to be rotated</param>
         /// <param name="xCenter">X-coordinate of center of rotation</param>
         /// <param name="xCenter">Y-coordinate of center of rotation</param>
+        /// <returns>Instance of Line</returns>
         public static Line RotateLine(double distance1, double distance2, 
             double radians, Line line, double xCenter, double yCenter)
         {
@@ -124,19 +137,11 @@ namespace Sensors.VisualElements
         /// <summary>
         /// Allows to find an equation of a line 
         /// </summary>
+        /// <param name="line">Instance of a line</param>
+        /// <param name="k">Slope of a line</param>
+        /// <param name="m">Y-intercept of a line</param>
         private static void FindEquationOfLine(Line line, out double k, out double m)
         {
-            /* LITTLE DESCRIPTION OF MATH FORMULAS
-            Line's formula: y = kx + m. 
-            Get equation of a line with two points: 
-            y - y2 = (y2 - y1) / (x2 - x1) * (x -x2). 
-            
-            So let `k = (y2 - y1) / (x2 - x1)` and expand the brackets: 
-            y - y2 = k * (x - x2);
-            y = k * x - k * x2 + y2. 
-            This means that `m = k * x2 + y2` 
-            */
-            
             k = (line.Y2 - line.Y1) / (line.X2 - line.X1); 
             m = k * line.X2 + line.Y2; 
         }
@@ -144,6 +149,11 @@ namespace Sensors.VisualElements
         /// <summary>
         /// Allows to find roots of a quadratic equation 
         /// </summary>
+        /// <param name="a">Coefficient of x-squared</param>
+        /// <param name="b">Coefficient of x</param>
+        /// <param name="c">Coefficient of constant term</param>
+        /// <param name="root1">Root 1 of an equation</param>
+        /// <param name="root2">Root 2 of an equation</param>
         private static void FindRootsOfQuadraticEquation(double a, double b, 
             double c, out double? root1, out double? root2)
         {
@@ -171,6 +181,9 @@ namespace Sensors.VisualElements
         /// <summary>
         /// Calculates midpoint of a line 
         /// </summary>
+        /// <param name="line">Instance of a line</param>
+        /// <param name="x">X coordinate of midpoint</param>
+        /// <param name="y">Y coordinate of midpoint</param>
         public static void MidpointOfLine(Line line, out double x, out double y)
         {
             x = (line.X1 + line.X2) / 2; 
@@ -180,6 +193,11 @@ namespace Sensors.VisualElements
         /// <summary>
         /// Calculates length of line 
         /// </summary>
+        /// <param name="x1">X coordinate of point 1</param>
+        /// <param name="x2">X coordinate of point 2</param>
+        /// <param name="y1">Y coordinate of point 1</param>
+        /// <param name="y2">Y coordinate of point 2</param>
+        /// <returns>Distance between two points</returns>
         public static double DistanceBetweenTwoPoints(double x1, double x2, double y1, double y2)
         {
             return System.Math.Sqrt( System.Math.Pow((x2 - x1), 2) + System.Math.Pow((y2 - y1), 2) ); 
@@ -188,6 +206,8 @@ namespace Sensors.VisualElements
         /// <summary>
         /// Calculates angle between two lines 
         /// </summary>
+        /// <param name="line1">Instance of line 1</param>
+        /// <param name="line2">Instance of line 2</param>
         /// <returns>Angle between two lines in radians</returns>
         public static double AngleBetweenTwoLines(Line line1, Line line2)
         {
@@ -209,6 +229,8 @@ namespace Sensors.VisualElements
         /// <summary>
         /// Allows to convert degrees to radians 
         /// </summary>
+        /// <param name="degrees">Angle in degrees</param>
+        /// <returns>Angle in radians</returns>
         public static double DegreesToRadians(double degrees)
         {
             return degrees * System.Math.PI / 180; 
@@ -217,6 +239,8 @@ namespace Sensors.VisualElements
         /// <summary>
         /// Allows to convert radians to degrees 
         /// </summary>
+        /// <param name="radians">Angle in radians</param>
+        /// <returns>Angle in degrees</returns>
         public static double RadiansToDegrees(double radians)
         {
             return radians * 180 / System.Math.PI; 

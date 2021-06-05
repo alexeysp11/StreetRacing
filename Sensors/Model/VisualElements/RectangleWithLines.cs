@@ -11,38 +11,41 @@ namespace Sensors.VisualElements
         /// <summary>
         /// Initial coordinate of X1 (is used to avoid distortion while rotating)
         /// </summary>
-        public double InitialX1 = 0; 
+        public double InitialX1 { get; private set; } = 0; 
         /// <summary>
         /// Initial coordinate of X2 (is used to avoid distortion while rotating)
         /// </summary>
-        public double InitialX2 = 0; 
+        public double InitialX2 { get; private set; } = 0; 
         /// <summary>
         /// Initial coordinate of X3 (is used to avoid distortion while rotating)
         /// </summary>
-        public double InitialX3 = 0; 
+        public double InitialX3 { get; private set; } = 0; 
         /// <summary>
         /// Initial coordinate of X4 (is used to avoid distortion while rotating)
         /// </summary>
-        public double InitialX4 = 0; 
+        public double InitialX4 { get; private set; } = 0; 
         /// <summary>
         /// Initial coordinate of Y1 (is used to avoid distortion while rotating)
         /// </summary>
-        public double InitialY1 = 0; 
+        public double InitialY1 { get; private set; } = 0; 
         /// <summary>
         /// Initial coordinate of Y2 (is used to avoid distortion while rotating)
         /// </summary>
-        public double InitialY2 = 0; 
+        public double InitialY2 { get; private set; } = 0; 
         /// <summary>
         /// Initial coordinate of Y3 (is used to avoid distortion while rotating)
         /// </summary>
-        public double InitialY3 = 0; 
+        public double InitialY3 { get; private set; } = 0; 
         /// <summary>
         /// Initial coordinate of Y4 (is used to avoid distortion while rotating)
         /// </summary>
-        public double InitialY4 = 0; 
+        public double InitialY4 { get; private set; } = 0; 
         #endregion  // Initial coordinates
 
         #region X coordinates
+        /// <summary>
+        /// X-coordinate of point 1
+        /// </summary>
         public double X1 
         { 
             set 
@@ -52,6 +55,9 @@ namespace Sensors.VisualElements
             }
             get { return Line1.X1; }
         }
+        /// <summary>
+        /// X-coordinate of point 2
+        /// </summary>
         public double X2 
         {
             set
@@ -61,6 +67,9 @@ namespace Sensors.VisualElements
             }
             get { return Line2.X1; }
         }
+        /// <summary>
+        /// X-coordinate of point 3
+        /// </summary>
         public double X3 
         {
             set
@@ -70,6 +79,9 @@ namespace Sensors.VisualElements
             }
             get { return Line3.X1; }
         }
+        /// <summary>
+        /// X-coordinate of point 4
+        /// </summary>
         public double X4 
         {
             set 
@@ -82,6 +94,9 @@ namespace Sensors.VisualElements
         #endregion  // X coordinates
 
         #region Y coordinates
+        /// <summary>
+        /// Y-coordinate of point 1
+        /// </summary>
         public double Y1 
         {
             set
@@ -91,6 +106,9 @@ namespace Sensors.VisualElements
             }
             get { return Line1.Y1; }
         }
+        /// <summary>
+        /// Y-coordinate of point 2
+        /// </summary>
         public double Y2 
         {
             set 
@@ -100,6 +118,9 @@ namespace Sensors.VisualElements
             }
             get { return Line2.Y1; }
         }
+        /// <summary>
+        /// Y-coordinate of point 3
+        /// </summary>
         public double Y3 
         {
             set  
@@ -109,6 +130,9 @@ namespace Sensors.VisualElements
             }
             get { return Line3.Y1; }
         }
+        /// <summary>
+        /// Y-coordinate of point 4
+        /// </summary>
         public double Y4 
         {
             set  
@@ -121,12 +145,25 @@ namespace Sensors.VisualElements
         #endregion  // Y coordinates
 
         #region Lines
-        public Line Line1 = new Line(); 
-        public Line Line2 = new Line(); 
-        public Line Line3 = new Line(); 
-        public Line Line4 = new Line(); 
+        /// <summary>
+        /// Line 1 of rectangle (used only for drawing rectangle on the canvas)
+        /// </summary>
+        public Line Line1 { get; private set; } = new Line(); 
+        /// <summary>
+        /// Line 2 of rectangle (used only for drawing rectangle on the canvas)
+        /// </summary>
+        public Line Line2 { get; private set; } = new Line(); 
+        /// <summary>
+        /// Line 3 of rectangle (used only for drawing rectangle on the canvas)
+        /// </summary>
+        public Line Line3 { get; private set; } = new Line(); 
+        /// <summary>
+        /// Line 4 of rectangle (used only for drawing rectangle on the canvas)
+        /// </summary>
+        public Line Line4 { get; private set; } = new Line(); 
         #endregion  // Lines
 
+        #region Constructor
         public RectangleWithLines(double width, double height, double x1, double y1, 
             System.Windows.Media.Brush color, double strokeThickness)
         {
@@ -172,5 +209,23 @@ namespace Sensors.VisualElements
             InitialY3 = Y3; 
             InitialY4 = Y4; 
         }
+        #endregion  // Constructor
+
+        #region Methods
+        /// <summary>
+        /// Allows to place rectangle to the initial points
+        /// </summary>
+        public void PlaceToInitialPoints()
+        {
+            this.X1 = this.InitialX1; 
+            this.X2 = this.InitialX2; 
+            this.X3 = this.InitialX3; 
+            this.X4 = this.InitialX4; 
+            this.Y1 = this.InitialY1; 
+            this.Y2 = this.InitialY2; 
+            this.Y3 = this.InitialY3; 
+            this.Y4 = this.InitialY4; 
+        }
+        #endregion  // Methods
     }
 }

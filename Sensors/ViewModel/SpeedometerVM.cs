@@ -38,7 +38,6 @@ namespace Sensors.ViewModel
         { 
             get { return SpeedKmPerHour - StepSpeed; }
         }
-        
         /// <summary>
         /// Step between point with labels on the speedometer 
         /// </summary>
@@ -51,8 +50,13 @@ namespace Sensors.ViewModel
         /// Maximal available speed that speedometer can measure 
         /// </summary>
         private double MaxSpeed = 220;
-
+        /// <summary>
+        /// Current speed in km/h (for only storing variable) 
+        /// </summary>
         private double speed = 0;
+        /// <summary>
+        /// Current speed in km/h (for use) 
+        /// </summary>
         public double SpeedKmPerHour
         {
             get { return speed; }
@@ -122,6 +126,7 @@ namespace Sensors.ViewModel
         /// <summary>
         /// Allows to rotate speedometer arrow and point on current speed 
         /// </summary>
+        /// <param name="deltaSpeed">Change of speed</param>
         public void RotateSpeedometerArrow(double deltaSpeed=0)
         {
             try

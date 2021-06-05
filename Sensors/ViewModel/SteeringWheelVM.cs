@@ -12,6 +12,9 @@ using Sensors.Exceptions;
 
 namespace Sensors.ViewModel
 {
+    /// <summary>
+    /// Allows to use steering wheel 
+    /// </summary>
     public class SteeringWheelVM
     {
         #region Members
@@ -25,14 +28,41 @@ namespace Sensors.ViewModel
         /// <summary>
         /// Command that is used to regulate speed 
         /// </summary>
-        public ICommand RotateSteeringWheelCommand { get; set; }
+        public ICommand RotateSteeringWheelCommand { get; private set; }
         #endregion  // Commands
 
-        #region Properties
+        #region Steering wheel properties
         /// <summary>
-        /// Angle of rotation of steering wheel as a whole 
+        /// Maximum angle of rotation  
         /// </summary>
-        private double AngleOfSteeringWheel { get; set; } = 0; 
+        private const double MaxAngle = 30; 
+        /// <summary>
+        /// Minimum angle of rotation  
+        /// </summary>
+        private const double MinAngle = -30; 
+        /// <summary>
+        /// Angle of rotation of steering wheel (for only storing variable)
+        /// </summary>
+        private double angleOfSteeringWheel = 0; 
+        /// <summary>
+        /// Angle of rotation of steering wheel (for use)
+        /// </summary>
+        private double AngleOfSteeringWheel 
+        {
+            get { return angleOfSteeringWheel; }
+            set 
+            {
+                if (value >= MaxAngle)
+                {
+                    value = MaxAngle;
+                }
+                else if (value <= MinAngle)
+                {
+                    value = MinAngle;
+                }
+                angleOfSteeringWheel = value; 
+            }
+        }
         /// <summary>
         /// X-coordinate of center of rotation 
         /// </summary>
@@ -41,97 +71,130 @@ namespace Sensors.ViewModel
         /// Y-coordinate of center of rotation 
         /// </summary>
         private double YCenter = 0; 
-        #endregion  // Properties
+        #endregion  // Steering wheel properties
 
-        #region Ellipses of steering wheel
-        Ellipse OuterEllipse = null; 
-        Ellipse MiddleEllipse = null; 
-        Ellipse InnerEllipse = null; 
-        #endregion  // Ellipses of steering wheel
+        #region Ellipses 
+        /// <summary>
+        /// Outer ellipse of steering wheel 
+        /// </summary>
+        private Ellipse OuterEllipse = null; 
+        /// <summary>
+        /// Middle ellipse of steering wheel 
+        /// </summary>
+        private Ellipse MiddleEllipse = null; 
+        /// <summary>
+        /// Inner ellipse of steering wheel 
+        /// </summary>
+        private Ellipse InnerEllipse = null; 
+        #endregion  // Ellipses 
 
-        #region Rectangles of steering wheel
+        #region Names of ellipses
+        /// <summary>
+        /// Name of MainEllipse (used to find an element of steering wheel to rotate)
+        /// </summary>
+        private string OuterEllipseName = "OuterEllipse"; 
+        /// <summary>
+        /// Name of SecondEllipse (used to find an element of steering wheel to rotate)
+        /// </summary>
+        private string MiddleEllipseName = "MiddleEllipse"; 
+        /// <summary>
+        /// Name of ThirdEllipse (used to find an element of steering wheel to rotate)
+        /// </summary>
+        private string InnerEllipseName = "InnerEllipse"; 
+        #endregion // Names of ellipses
+
+        #region Rectangles 
+        /// <summary>
+        /// Left ellipse of steering wheel 
+        /// </summary>
         private RectangleWithLines LeftRectangle = null; 
+        /// <summary>
+        /// Right rectangle of steering wheel 
+        /// </summary>
         private RectangleWithLines RightRectangle = null; 
+        /// <summary>
+        /// Lower rectangle of steering wheel 
+        /// </summary>
         private RectangleWithLines LowerRectangle = null; 
+        #endregion  // Rectangles 
+
+        #region Properties of rectangles
+        /// <summary>
+        /// Angle of rotation of left rectangle  
+        /// </summary>
         private double LeftRectangleCenterAngle 
         {
             get { return this.AngleOfSteeringWheel + 180; }
         }
+        /// <summary>
+        /// Angle of rotation of right rectangle  
+        /// </summary>
         private double RightRectangleCenterAngle 
         {
             get { return this.AngleOfSteeringWheel; }
         }
+        /// <summary>
+        /// Angle of rotation of lower rectangle  
+        /// </summary>
         private double LowerRectangleCenterAngle 
         {
             get { return this.AngleOfSteeringWheel - 90; }
         }
-        #endregion  // Rectangles of steering wheel
+        #endregion  // Properties of rectangles
 
         #region Lines of steering wheel
-        /// <summary>
-        /// Angle of left upper line (in degrees)
-        /// </summary>
-        private const double AngleOfLeftUpperLine = 165; 
         /// <summary>
         /// Instance of left upper line
         /// </summary>
         private Line LeftUpperLine = null; 
         /// <summary>
-        /// Angle of left lower line (in degrees)
-        /// </summary>
-        private const double AngleOfLeftLowerLine = 195; 
-        /// <summary>
         /// Instance of left lower line
         /// </summary>
         private Line LeftLowerLine = null; 
-        /// <summary>
-        /// Angle of right upper line (in degrees)
-        /// </summary>
-        private const double AngleOfRightUpperLine = 15; 
         /// <summary>
         /// Instance of right upper line
         /// </summary>
         private Line RightUpperLine = null; 
         /// <summary>
-        /// Angle of right lower line (in degrees)
-        /// </summary>
-        private const double AngleOfRightLowerLine = -15; 
-        /// <summary>
         /// Instance of right lower line
         /// </summary>
         private Line RightLowerLine = null; 
         /// <summary>
-        /// Angle of bottom left line (in degrees)
-        /// </summary>
-        private const double AngleOfBottomLeftLine = -67.5; 
-        /// <summary>
         /// Instance of bottom left line
         /// </summary>
         private Line BottomLeftLine = null; 
-        /// <summary>
-        /// Angle of bottom right line (in degrees)
-        /// </summary>
-        private const double AngleOfBottomRightLine = -112.5; 
         /// <summary>
         /// Instance of bottom right line
         /// </summary>
         private Line BottomRightLine = null; 
         #endregion  // Lines of steering wheel 
 
-        #region Names of visual elements  
+        #region Properties of lines
         /// <summary>
-        /// Name of MainEllipse (used to find an element of steering wheel to rotate)
+        /// Angle of left upper line (in degrees)
         /// </summary>
-        private string MainEllipseName = "MainEllipse"; 
+        private const double AngleOfLeftUpperLine = 165; 
         /// <summary>
-        /// Name of SecondEllipse (used to find an element of steering wheel to rotate)
+        /// Angle of left lower line (in degrees)
         /// </summary>
-        private string SecondEllipseName = "SecondEllipse"; 
+        private const double AngleOfLeftLowerLine = 195; 
         /// <summary>
-        /// Name of ThirdEllipse (used to find an element of steering wheel to rotate)
+        /// Angle of right upper line (in degrees)
         /// </summary>
-        private string ThirdEllipseName = "ThirdEllipse"; 
-        #endregion // Names of visual elements
+        private const double AngleOfRightUpperLine = 15; 
+        /// <summary>
+        /// Angle of right lower line (in degrees)
+        /// </summary>
+        private const double AngleOfRightLowerLine = -15; 
+        /// <summary>
+        /// Angle of bottom left line (in degrees)
+        /// </summary>
+        private const double AngleOfBottomLeftLine = -67.5; 
+        /// <summary>
+        /// Angle of bottom right line (in degrees)
+        /// </summary>
+        private const double AngleOfBottomRightLine = -112.5; 
+        #endregion  // Properties of lines
 
         #region Constructor
         public SteeringWheelVM(MainWindow window)
@@ -168,7 +231,7 @@ namespace Sensors.ViewModel
             System.Windows.Media.Brush fillColor = null; 
             double canvasTop = 287.5; 
             double canvasLeft = 325; 
-            string name = MainEllipseName; 
+            string name = OuterEllipseName; 
             var mainEllipse = WpfElements.DrawEllipseOnCanvas(width, height, 
                 strokeThickness, strokeColor, fillColor, canvasTop, canvasLeft, 
                 name); 
@@ -180,11 +243,9 @@ namespace Sensors.ViewModel
             height = mainEllipse.Height / k; 
             width = mainEllipse.Width / k; 
             strokeThickness = 2; 
-            strokeColor = System.Windows.Media.Brushes.Black; 
-            fillColor = null; 
             canvasTop = Canvas.GetTop(mainEllipse) + mainEllipse.Height / 2 - height / 2; 
             canvasLeft = Canvas.GetLeft(mainEllipse) + mainEllipse.Width / 2 - width / 2; 
-            name = SecondEllipseName; 
+            name = MiddleEllipseName; 
             var secondEllipse = WpfElements.DrawEllipseOnCanvas(width, height, 
                 strokeThickness, strokeColor, fillColor, canvasTop, canvasLeft, 
                 name); 
@@ -195,12 +256,9 @@ namespace Sensors.ViewModel
             k = 3;  
             height = secondEllipse.Height / k; 
             width = secondEllipse.Width / k; 
-            strokeThickness = 2; 
-            strokeColor = System.Windows.Media.Brushes.Black; 
-            fillColor = null; 
             canvasTop = Canvas.GetTop(secondEllipse) + secondEllipse.Height / 2 - height / 2; 
             canvasLeft = Canvas.GetLeft(secondEllipse) + secondEllipse.Width / 2 - width / 2; 
-            name = ThirdEllipseName; 
+            name = InnerEllipseName; 
             var thirdEllipse = WpfElements.DrawEllipseOnCanvas(width, height, 
                 strokeThickness, strokeColor, fillColor, canvasTop, canvasLeft, 
                 name); 
@@ -343,6 +401,7 @@ namespace Sensors.ViewModel
         /// <summary>
         /// Allows to rotate all rectangles that steering wheel consists of 
         /// </summary>
+        /// <param name="angle">Angle in degrees that rectangles need be rotated</param>
         private void RotateRectanglesOfSteeringWheel(double angle)
         {
             this.RotateRectangleWithLines(LeftRectangle, angle); 
@@ -353,20 +412,14 @@ namespace Sensors.ViewModel
         /// <summary>
         /// Rotates single rectangle of RectangleWithLines
         /// </summary>
-        private void RotateRectangleWithLines(RectangleWithLines rectangle, 
-            double angle)
+        /// <param name="rectangle">Instance of RectangleWithLines</param>
+        /// <param name="angle">Angle in degrees that rectangle need be rotated</param>
+        private void RotateRectangleWithLines(RectangleWithLines rectangle, double angle)
         {
             // Set at initial points to avoid distortion while rotating
             if (this.AngleOfSteeringWheel == 0)
             {
-                rectangle.X1 = rectangle.InitialX1; 
-                rectangle.X2 = rectangle.InitialX2; 
-                rectangle.X3 = rectangle.InitialX3; 
-                rectangle.X4 = rectangle.InitialX4; 
-                rectangle.Y1 = rectangle.InitialY1; 
-                rectangle.Y2 = rectangle.InitialY2; 
-                rectangle.Y3 = rectangle.InitialY3; 
-                rectangle.Y4 = rectangle.InitialY4; 
+                rectangle.PlaceToInitialPoints(); 
                 return; 
             }
             
@@ -398,22 +451,12 @@ namespace Sensors.ViewModel
             WpfGeometry.RotatePoint(ref x, ref y, radians); 
             rectangle.X4 = XCenter + x; 
             rectangle.Y4 = YCenter - y; 
-
-            double distance1 = WpfGeometry.DistanceBetweenTwoPoints(XCenter, 
-                rectangle.X1, YCenter, rectangle.Y1); 
-            double distance2 = WpfGeometry.DistanceBetweenTwoPoints(XCenter, 
-                rectangle.X2, YCenter, rectangle.Y2); 
-            double distance3 = WpfGeometry.DistanceBetweenTwoPoints(XCenter, 
-                rectangle.X3, YCenter, rectangle.Y3); 
-            double distance4 = WpfGeometry.DistanceBetweenTwoPoints(XCenter, 
-                rectangle.X4, YCenter, rectangle.Y4); 
-
-            //System.Windows.MessageBox.Show($"distance1: {distance1}, distance2: {distance2}, distance3: {distance3}, distance4: {distance4}");
         }
 
         /// <summary>
         /// Allows to rotate steering wheel 
         /// </summary>
+        /// <param name="angle">Delta angle that steering wheel should be rotated</param>
         public void RotateElementsOfSteeringWheel(double angle=5)
         {
             // Get all elements on the canvas that steering wheel consists of 
@@ -425,15 +468,18 @@ namespace Sensors.ViewModel
             double yCenter = 0; 
             bool isGetCenterOfRotation = false; 
 
+            // Old angle that is used to determine if steering wheel was rotated
+            double oldAngle = AngleOfSteeringWheel; 
+
             // Adjust angle of steering wheel
             this.AngleOfSteeringWheel += angle; 
 
             // Find ellipse elements of steering wheel using their names 
             foreach(var ellipse in ellipses)
             {
-                if (ellipse.Name == MainEllipseName || 
-                    ellipse.Name == SecondEllipseName || 
-                    ellipse.Name == ThirdEllipseName)
+                if (ellipse.Name == OuterEllipseName || 
+                    ellipse.Name == MiddleEllipseName || 
+                    ellipse.Name == InnerEllipseName)
                 {
                     // Rotate a line using RotateTransform
                     RotateTransform rotateTransform = new RotateTransform();
@@ -448,7 +494,13 @@ namespace Sensors.ViewModel
             this.RotateLinesOfSteeringWheel(); 
 
             // Rotate rectangles of steering wheel 
-            this.RotateRectanglesOfSteeringWheel(angle); 
+            if (AngleOfSteeringWheel <= MaxAngle && AngleOfSteeringWheel >= MinAngle)
+            {
+                if ( System.Math.Abs(AngleOfSteeringWheel - oldAngle) != 0 )
+                {
+                    this.RotateRectanglesOfSteeringWheel(angle); 
+                }
+            }
         }
         #endregion  // Methods
     }
