@@ -1,3 +1,3 @@
 @echo off
 
-dotnet run --project Sensors/Sensors.csproj
+dotnet run --project StreetRacing/StreetRacing.csproj
