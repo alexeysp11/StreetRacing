@@ -15,11 +15,18 @@ namespace StreetRacing.ViewModel
         {
             get { return _SteeringWheelVM; }
         }
+
+        private CabinVM _CabinVM;
+        public CabinVM CabinVM
+        {
+            get { return _CabinVM; }
+        }
         
         public MainWindowVM(MainWindow window)
         {
             this._SpeedometerVM = new SpeedometerVM(window); 
             this._SteeringWheelVM = new SteeringWheelVM(window); 
+            this._CabinVM = new CabinVM(window); 
         }
     }
 }

@@ -116,9 +116,9 @@ namespace StreetRacing.ViewModel
         /// </summary>
         private void DrawSpeedometerArrow()
         {
-            this._MainWindow.SpeedometerArrow.X1 = this._MainWindow.MainCanvas.ActualWidth / 2; 
+            this._MainWindow.SpeedometerArrow.X1 = 0.277 * this._MainWindow.MainCanvas.ActualWidth; 
             this._MainWindow.SpeedometerArrow.X2 = this._MainWindow.SpeedometerArrow.X1 - this._MainWindow.MainCanvas.ActualWidth / 20; 
-            this._MainWindow.SpeedometerArrow.Y1 = this._MainWindow.MainCanvas.ActualHeight / 1.6; 
+            this._MainWindow.SpeedometerArrow.Y1 = 0.755 * this._MainWindow.MainCanvas.ActualHeight; 
             this._MainWindow.SpeedometerArrow.Y2 = this._MainWindow.SpeedometerArrow.Y1; 
         }
 

@@ -200,7 +200,7 @@ namespace StreetRacing.ViewModel
         public SteeringWheelVM(MainWindow window)
         {
             // MainWindow instance to acces all elements on the canvas
-            this._MainWindow = window;
+            this._MainWindow = window; 
 
             // Command for steering wheel rotation 
             RotateSteeringWheelCommand = new RotateSteeringWheelCommand(this); 
@@ -229,8 +229,8 @@ namespace StreetRacing.ViewModel
             double strokeThickness = 10; 
             System.Windows.Media.Brush strokeColor = System.Windows.Media.Brushes.Black; 
             System.Windows.Media.Brush fillColor = null; 
-            double canvasTop = 287.5; 
-            double canvasLeft = 325; 
+            double canvasTop = 0.858 * this._MainWindow.MainCanvas.ActualHeight - height/2; 
+            double canvasLeft = 0.277 * this._MainWindow.MainCanvas.ActualWidth - width/2; 
             string name = OuterEllipseName; 
             var mainEllipse = WpfElements.DrawEllipseOnCanvas(width, height, 
                 strokeThickness, strokeColor, fillColor, canvasTop, canvasLeft, 
@@ -343,10 +343,10 @@ namespace StreetRacing.ViewModel
                 // Lower rectangle
                 double temp = width; 
                 width = height; 
-                height = temp; 
+                height = temp * 0.60; 
                 WpfGeometry.MidpointOfLine(BottomLeftLine, out x, out y); 
                 xLeftTop = XCenter - width / 2; 
-                yLeftTop = y - height / 2; 
+                yLeftTop = y - height / 2 + height / 8; 
                 LowerRectangle = new RectangleWithLines(width, height, 
                     xLeftTop, yLeftTop, System.Windows.Media.Brushes.Black, 1); 
                 this._MainWindow.MainCanvas.Children.Add(LowerRectangle.Line1); 
@@ -401,32 +401,26 @@ namespace StreetRacing.ViewModel
         /// <summary>
         /// Allows to rotate all rectangles that steering wheel consists of 
         /// </summary>
-        /// <param name="angle">Angle in degrees that rectangles need be rotated</param>
-        private void RotateRectanglesOfSteeringWheel(double angle)
+        private void RotateRectanglesOfSteeringWheel()
         {
-            this.RotateRectangleWithLines(LeftRectangle, angle); 
-            this.RotateRectangleWithLines(RightRectangle, angle); 
-            this.RotateRectangleWithLines(LowerRectangle, angle);
+            this.RotateRectangleWithLines(LeftRectangle); 
+            this.RotateRectangleWithLines(RightRectangle); 
+            this.RotateRectangleWithLines(LowerRectangle);
         }
 
         /// <summary>
         /// Rotates single rectangle of RectangleWithLines
         /// </summary>
         /// <param name="rectangle">Instance of RectangleWithLines</param>
-        /// <param name="angle">Angle in degrees that rectangle need be rotated</param>
-        private void RotateRectangleWithLines(RectangleWithLines rectangle, double angle)
+        private void RotateRectangleWithLines(RectangleWithLines rectangle)
         {
             // Set at initial points to avoid distortion while rotating
-            if (this.AngleOfSteeringWheel == 0)
-            {
-                rectangle.PlaceToInitialPoints(); 
-                return; 
-            }
+            rectangle.PlaceToInitialPoints(); 
             
             // Rotate point 1
             double x = rectangle.X1 - XCenter; 
             double y = YCenter - rectangle.Y1; 
-            double radians = WpfGeometry.DegreesToRadians(-angle); 
+            double radians = WpfGeometry.DegreesToRadians(-AngleOfSteeringWheel); 
             WpfGeometry.RotatePoint(ref x, ref y, radians); 
             rectangle.X1 = XCenter + x; 
             rectangle.Y1 = YCenter - y; 
@@ -494,13 +488,7 @@ namespace StreetRacing.ViewModel
             this.RotateLinesOfSteeringWheel(); 
 
             // Rotate rectangles of steering wheel 
-            if (AngleOfSteeringWheel <= MaxAngle && AngleOfSteeringWheel >= MinAngle)
-            {
-                if ( System.Math.Abs(AngleOfSteeringWheel - oldAngle) != 0 )
-                {
-                    this.RotateRectanglesOfSteeringWheel(angle); 
-                }
-            }
+            this.RotateRectanglesOfSteeringWheel(); 
         }
         #endregion  // Methods
     }

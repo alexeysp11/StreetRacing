@@ -15,9 +15,21 @@ namespace StreetRacing.VisualElements
         /// </summary>
         /// <param name="line1">Instance of line 1</param>
         /// <param name="line2">Instance of line 2</param>
-        public static void IntersectionBetweenTwoLines(Line line1, Line line2)
+        public static void IntersectionBetweenTwoLines(Line line1, Line line2, 
+            out double x, out double y)
         {
+            // Declare slope and y-intercept of given lines
+            double slope1 = 0; 
+            double slope2 = 0; 
+            double yIntercept1 = 0; 
+            double yIntercept2 = 0; 
 
+            // Find equations of lines
+            FindEquationOfLine(line1, out slope1, out yIntercept1); 
+            FindEquationOfLine(line2, out slope2, out yIntercept2); 
+
+            x = -(yIntercept2 - yIntercept1) / (slope1 - slope2); 
+            y = slope1 * x + yIntercept1; 
         }
 
         /// <summary>

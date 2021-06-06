@@ -19,6 +19,7 @@ namespace StreetRacing.View
             {
                 ((MainWindowVM)(this.DataContext)).SpeedometerVM.DrawVisualElementsOfSpeedometer(); 
                 ((MainWindowVM)(this.DataContext)).SteeringWheelVM.DrawSteeringWheelOnCanvas(); 
+                ((MainWindowVM)(this.DataContext)).CabinVM.DrawCabinOnCanvas(); 
             }; 
         }
     }
