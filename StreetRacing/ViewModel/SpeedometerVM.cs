@@ -179,7 +179,6 @@ namespace StreetRacing.ViewModel
                 y = Y1 - r * System.Math.Sin(radians);
 
                 // Add ArcSegment
-                ArcSegment arcSegment = new ArcSegment();
                 Size desiredSize = new Size(r, r);
                 ArcSegment arc = new ArcSegment(new Point(x, y), desiredSize, 0, true, SweepDirection.Clockwise, true);
                 

@@ -103,6 +103,12 @@ namespace StreetRacing.ViewModel
         private string InnerEllipseName = "InnerEllipse"; 
         #endregion // Names of ellipses
 
+        #region Paths for parts of steering wheel 
+        private Path LeftPartFill = new Path(); 
+        private Path RightPartFill = new Path(); 
+        private Path LowerPartFill = new Path(); 
+        #endregion  // Paths for parts of steering wheel 
+
         #region Rectangles 
         /// <summary>
         /// Left ellipse of steering wheel 
@@ -220,6 +226,9 @@ namespace StreetRacing.ViewModel
 
             // Fill a color 
             this.FillColor(); 
+            this._MainWindow.MainCanvas.Children.Add(LeftPartFill); 
+            this._MainWindow.MainCanvas.Children.Add(RightPartFill); 
+            this._MainWindow.MainCanvas.Children.Add(LowerPartFill); 
         }
 
         /// <summary>
@@ -239,6 +248,7 @@ namespace StreetRacing.ViewModel
             var mainEllipse = WpfElements.DrawEllipseOnCanvas(width, height, 
                 strokeThickness, strokeColor, fillColor, canvasTop, canvasLeft, 
                 name); 
+            Canvas.SetZIndex(mainEllipse, 2); 
             this.OuterEllipse = mainEllipse; 
             this._MainWindow.MainCanvas.Children.Add(mainEllipse);
 
@@ -499,6 +509,9 @@ namespace StreetRacing.ViewModel
 
             // Rotate rectangles of steering wheel 
             this.RotateRectanglesOfSteeringWheel(); 
+            
+            // Fill color 
+            this.FillColor(); 
         }
         #endregion  // Rotation
 
@@ -508,7 +521,100 @@ namespace StreetRacing.ViewModel
         /// </summary>
         private void FillColor()
         {
+            try
+            {
+                // Fill left part of steering wheel 
+                this.FillSidePartOfSteeringWheel(LeftPartFill, new Point(LeftUpperLine.X1, LeftUpperLine.Y1), 
+                    new Point(LeftUpperLine.X2, LeftUpperLine.Y2), new Point(LeftLowerLine.X1, LeftLowerLine.Y1), 
+                    new Point(LeftLowerLine.X2, LeftLowerLine.Y2), new Size(MiddleEllipse.Width, MiddleEllipse.Height), 
+                    new Size(OuterEllipse.Width, OuterEllipse.Height), LeftRectangle, 
+                    System.Windows.Media.Brushes.Brown); 
+                
+                // Fill right part of steering wheel 
+                this.FillSidePartOfSteeringWheel(RightPartFill, new Point(RightUpperLine.X2, RightUpperLine.Y2), 
+                    new Point(RightUpperLine.X1, RightUpperLine.Y1), new Point(RightLowerLine.X2, RightLowerLine.Y2), 
+                    new Point(RightLowerLine.X1, RightLowerLine.Y1), new Size(OuterEllipse.Width, OuterEllipse.Height), 
+                    new Size(MiddleEllipse.Width, MiddleEllipse.Height), RightRectangle, 
+                    System.Windows.Media.Brushes.Brown); 
+                
+                // Fill lower part of steering wheel 
+                this.FillSidePartOfSteeringWheel(LowerPartFill, new Point(BottomLeftLine.X1, BottomLeftLine.Y1), 
+                    new Point(BottomLeftLine.X2, BottomLeftLine.Y2), new Point(BottomRightLine.X1, BottomRightLine.Y1), 
+                    new Point(BottomRightLine.X2, BottomRightLine.Y2), new Size(MiddleEllipse.Width, MiddleEllipse.Height), 
+                    new Size(OuterEllipse.Width, OuterEllipse.Height), LowerRectangle, 
+                    System.Windows.Media.Brushes.Brown); 
+            }
+            catch (System.Exception e)
+            {
+                ExceptionViewer.WatchExceptionMessageBox(e);    
+            }
+        }
+
+        private void FillSidePartOfSteeringWheel(Path myPath, Point startLine1, 
+            Point endLine1, Point startLine2, Point endLine2, Size arcSize1, 
+            Size arcSize2, RectangleWithLines rectangle, 
+            System.Windows.Media.Brush fillColor)
+        {
+            // Correct properties of Path instance
+            myPath.Stroke = System.Windows.Media.Brushes.Black;
+            myPath.Fill = fillColor;
+            myPath.StrokeThickness = 1;
+
+            // Assign PathFigure
+            PathFigure outerPathFigure = new PathFigure();
+            outerPathFigure.StartPoint = startLine1;
+
+            // Define LineSegment 1
+            LineSegment lineSegment1 = new LineSegment();
+            lineSegment1.Point = endLine1; 
+            outerPathFigure.Segments.Add(lineSegment1);
+
+            // Add ArcSegment 1
+            ArcSegment arc1 = new ArcSegment(endLine2, arcSize2, 0, false, SweepDirection.Clockwise, true);
+            outerPathFigure.Segments.Add(arc1);
+
+            // Define LineSegment 2
+            LineSegment lineSegment2 = new LineSegment();
+            lineSegment2.Point = startLine2; 
+            outerPathFigure.Segments.Add(lineSegment2);
+
+            // Add ArcSegment 2
+            ArcSegment arc2 = new ArcSegment(startLine1, arcSize1, 0, false, SweepDirection.Clockwise, true);
+            outerPathFigure.Segments.Add(arc2);
+
+            // Define PathGeometry for outer path
+            PathGeometry outerPathGeometry = new PathGeometry();
+            outerPathGeometry.Figures.Add(outerPathFigure);
+
+            /*
+            System.Windows.MessageBox.Show($@"Rectangles parameters
+            rectangle.X1: {rectangle.X1}, rectangle.X2: {rectangle.X2}, rectangle.X3: {rectangle.X3}, rectangle.X4: {rectangle.X4}
+            rectangle.Y1: {rectangle.Y1}, rectangle.Y2: {rectangle.Y2}, rectangle.Y3: {rectangle.Y3}, rectangle.Y4: {rectangle.Y4}"); 
+            */
             
+            // Define PathGeometry for inner path
+            PathFigure innerPathFigure = new PathFigure();
+            innerPathFigure.StartPoint = new Point(rectangle.X1, rectangle.Y1);
+            LineSegment innerLineSegment1 = new LineSegment();
+            innerLineSegment1.Point = new Point(rectangle.X2, rectangle.Y2); 
+            innerPathFigure.Segments.Add(innerLineSegment1);
+            LineSegment innerLineSegment2 = new LineSegment();
+            innerLineSegment2.Point = new Point(rectangle.X3, rectangle.Y3); 
+            innerPathFigure.Segments.Add(innerLineSegment2);
+            LineSegment innerLineSegment3 = new LineSegment();
+            innerLineSegment3.Point = new Point(rectangle.X4, rectangle.Y4); 
+            innerPathFigure.Segments.Add(innerLineSegment3);
+            innerPathFigure.IsClosed = true;
+            PathGeometry innerPathGeometry = new PathGeometry();
+            innerPathGeometry.Figures.Add(innerPathFigure);
+
+            // Add PathGeometries to the GeometryGroup
+            GeometryGroup myGeometryGroup = new GeometryGroup();
+            myGeometryGroup.Children.Add(outerPathGeometry);
+            myGeometryGroup.Children.Add(innerPathGeometry);
+
+            // Add GeometryGroup to the Path
+            myPath.Data = myGeometryGroup;
         }
         #endregion  // Filling a color
     }
