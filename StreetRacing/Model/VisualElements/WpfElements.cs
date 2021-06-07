@@ -45,7 +45,8 @@ namespace StreetRacing.VisualElements
         /// <param name="strokeThickness">Thickness of stroke</param>
         /// <returns>Instance of Line</returns>
         public static Line CreateLine(double x1, double x2, double y1, double y2, 
-            System.Windows.Media.Brush strokeColor, double strokeThickness)
+            System.Windows.Media.Brush strokeColor, double strokeThickness, 
+            string name=null)
         {
             Line myLine = new Line();
             myLine.Stroke = strokeColor;
@@ -54,6 +55,7 @@ namespace StreetRacing.VisualElements
             myLine.Y1 = y1;
             myLine.Y2 = y2;
             myLine.StrokeThickness = strokeThickness;
+            myLine.Name = name; 
             return myLine; 
         }
 

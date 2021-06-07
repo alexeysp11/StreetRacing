@@ -207,15 +207,19 @@ namespace StreetRacing.ViewModel
         }
         #endregion  // Constructor
 
-        #region Methods
+        #region Drawing
         /// <summary>
         /// Allows to draw all visual elements that steering wheel consists of
         /// </summary>
         public void DrawSteeringWheelOnCanvas()
         {
+            // Draw all elements of steering wheel 
             this.DrawEllipsesOfSteeringWheel(); 
             this.DrawLinesOfSteeringWheel(); 
             this.DrawRectanglesOfSteeringWheel();
+
+            // Fill a color 
+            this.FillColor(); 
         }
 
         /// <summary>
@@ -238,7 +242,7 @@ namespace StreetRacing.ViewModel
             this.OuterEllipse = mainEllipse; 
             this._MainWindow.MainCanvas.Children.Add(mainEllipse);
 
-            // Second circle of a steering wheel 
+            // Middle ellipse of a steering wheel 
             double k = 3;  
             height = mainEllipse.Height / k; 
             width = mainEllipse.Width / k; 
@@ -246,22 +250,26 @@ namespace StreetRacing.ViewModel
             canvasTop = Canvas.GetTop(mainEllipse) + mainEllipse.Height / 2 - height / 2; 
             canvasLeft = Canvas.GetLeft(mainEllipse) + mainEllipse.Width / 2 - width / 2; 
             name = MiddleEllipseName; 
+            fillColor = System.Windows.Media.Brushes.Brown;
             var secondEllipse = WpfElements.DrawEllipseOnCanvas(width, height, 
                 strokeThickness, strokeColor, fillColor, canvasTop, canvasLeft, 
                 name); 
+            Canvas.SetZIndex(secondEllipse, 1); 
             this.MiddleEllipse = secondEllipse; 
             this._MainWindow.MainCanvas.Children.Add(secondEllipse);
 
-            // Third ellipse 
+            // Inner ellipse of a steering wheel
             k = 3;  
             height = secondEllipse.Height / k; 
             width = secondEllipse.Width / k; 
             canvasTop = Canvas.GetTop(secondEllipse) + secondEllipse.Height / 2 - height / 2; 
             canvasLeft = Canvas.GetLeft(secondEllipse) + secondEllipse.Width / 2 - width / 2; 
             name = InnerEllipseName; 
+            fillColor = System.Windows.Media.Brushes.Black;
             var thirdEllipse = WpfElements.DrawEllipseOnCanvas(width, height, 
                 strokeThickness, strokeColor, fillColor, canvasTop, canvasLeft, 
                 name); 
+            Canvas.SetZIndex(thirdEllipse, 2); 
             this.InnerEllipse = thirdEllipse; 
             this._MainWindow.MainCanvas.Children.Add(thirdEllipse);
 
@@ -359,7 +367,9 @@ namespace StreetRacing.ViewModel
                 ExceptionViewer.WatchExceptionMessageBox(e); 
             }
         }
+        #endregion  // Drawing
 
+        #region Rotation
         /// <summary>
         /// Allows to rotate all lines that steering wheel consists of 
         /// </summary>
@@ -490,6 +500,16 @@ namespace StreetRacing.ViewModel
             // Rotate rectangles of steering wheel 
             this.RotateRectanglesOfSteeringWheel(); 
         }
-        #endregion  // Methods
+        #endregion  // Rotation
+
+        #region Filling a color
+        /// <summary>
+        /// Allows to fill a color at runtime using Path 
+        /// </summary>
+        private void FillColor()
+        {
+            
+        }
+        #endregion  // Filling a color
     }
 }

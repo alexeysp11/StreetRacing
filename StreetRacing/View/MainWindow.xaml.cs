@@ -17,9 +17,7 @@ namespace StreetRacing.View
             using lambda expression. */
             Loaded += (o, e) => 
             {
-                ((MainWindowVM)(this.DataContext)).SpeedometerVM.DrawVisualElementsOfSpeedometer(); 
-                ((MainWindowVM)(this.DataContext)).SteeringWheelVM.DrawSteeringWheelOnCanvas(); 
-                ((MainWindowVM)(this.DataContext)).CabinVM.DrawCabinOnCanvas(); 
+                ((MainWindowVM)(this.DataContext)).DrawVisualElements();  
             }; 
         }
     }

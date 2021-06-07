@@ -120,6 +120,7 @@ namespace StreetRacing.ViewModel
             this._MainWindow.SpeedometerArrow.X2 = this._MainWindow.SpeedometerArrow.X1 - this._MainWindow.MainCanvas.ActualWidth / 20; 
             this._MainWindow.SpeedometerArrow.Y1 = 0.755 * this._MainWindow.MainCanvas.ActualHeight; 
             this._MainWindow.SpeedometerArrow.Y2 = this._MainWindow.SpeedometerArrow.Y1; 
+            Canvas.SetZIndex(this._MainWindow.SpeedometerArrow, 2);
         }
 
         /// <summary>
