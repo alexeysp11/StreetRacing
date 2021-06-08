@@ -245,10 +245,11 @@ namespace StreetRacing.ViewModel
             double canvasTop = 0.858 * this._MainWindow.MainCanvas.ActualHeight - height/2; 
             double canvasLeft = 0.277 * this._MainWindow.MainCanvas.ActualWidth - width/2; 
             string name = OuterEllipseName; 
+            int zIndex = 3; 
             var mainEllipse = WpfElements.DrawEllipseOnCanvas(width, height, 
                 strokeThickness, strokeColor, fillColor, canvasTop, canvasLeft, 
                 name); 
-            Canvas.SetZIndex(mainEllipse, 2); 
+            Canvas.SetZIndex(mainEllipse, zIndex); 
             this.OuterEllipse = mainEllipse; 
             this._MainWindow.MainCanvas.Children.Add(mainEllipse);
 
@@ -264,7 +265,7 @@ namespace StreetRacing.ViewModel
             var secondEllipse = WpfElements.DrawEllipseOnCanvas(width, height, 
                 strokeThickness, strokeColor, fillColor, canvasTop, canvasLeft, 
                 name); 
-            Canvas.SetZIndex(secondEllipse, 1); 
+            Canvas.SetZIndex(secondEllipse, zIndex); 
             this.MiddleEllipse = secondEllipse; 
             this._MainWindow.MainCanvas.Children.Add(secondEllipse);
 
@@ -279,7 +280,7 @@ namespace StreetRacing.ViewModel
             var thirdEllipse = WpfElements.DrawEllipseOnCanvas(width, height, 
                 strokeThickness, strokeColor, fillColor, canvasTop, canvasLeft, 
                 name); 
-            Canvas.SetZIndex(thirdEllipse, 2); 
+            Canvas.SetZIndex(thirdEllipse, zIndex); 
             this.InnerEllipse = thirdEllipse; 
             this._MainWindow.MainCanvas.Children.Add(thirdEllipse);
 
@@ -477,11 +478,6 @@ namespace StreetRacing.ViewModel
             IEnumerable<Ellipse> ellipses = this._MainWindow.MainCanvas.Children.OfType<Ellipse>();
             IEnumerable<Rectangle> rectanges = this._MainWindow.MainCanvas.Children.OfType<Rectangle>();
             
-            // Center of rotation 
-            double xCenter = 0; 
-            double yCenter = 0; 
-            bool isGetCenterOfRotation = false; 
-
             // Old angle that is used to determine if steering wheel was rotated
             double oldAngle = AngleOfSteeringWheel; 
 
@@ -550,6 +546,9 @@ namespace StreetRacing.ViewModel
             }
         }
 
+        /// <summary>
+        /// Allows to set color for part of steering wheel 
+        /// </summary>
         private void FillSidePartOfSteeringWheel(Path myPath, Point startLine1, 
             Point endLine1, Point startLine2, Point endLine2, Size arcSize1, 
             Size arcSize2, RectangleWithLines rectangle, 
@@ -559,6 +558,7 @@ namespace StreetRacing.ViewModel
             myPath.Stroke = System.Windows.Media.Brushes.Black;
             myPath.Fill = fillColor;
             myPath.StrokeThickness = 1;
+            Canvas.SetZIndex(myPath, 2); 
 
             // Assign PathFigure
             PathFigure outerPathFigure = new PathFigure();
@@ -585,12 +585,6 @@ namespace StreetRacing.ViewModel
             // Define PathGeometry for outer path
             PathGeometry outerPathGeometry = new PathGeometry();
             outerPathGeometry.Figures.Add(outerPathFigure);
-
-            /*
-            System.Windows.MessageBox.Show($@"Rectangles parameters
-            rectangle.X1: {rectangle.X1}, rectangle.X2: {rectangle.X2}, rectangle.X3: {rectangle.X3}, rectangle.X4: {rectangle.X4}
-            rectangle.Y1: {rectangle.Y1}, rectangle.Y2: {rectangle.Y2}, rectangle.Y3: {rectangle.Y3}, rectangle.Y4: {rectangle.Y4}"); 
-            */
             
             // Define PathGeometry for inner path
             PathFigure innerPathFigure = new PathFigure();

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media; 
 using System.Windows.Shapes;
 using StreetRacing.View; 
@@ -107,7 +108,7 @@ namespace StreetRacing.ViewModel
                 System.Windows.Media.Brushes.Black, 1); 
             this._MainWindow.MainCanvas.Children.Add(line18);
             
-            Line line19 = WpfElements.CreateLine(line6.X1, 0, line6.Y1, 0.1*width, 
+            Line line19 = WpfElements.CreateLine(line6.X1, 0, line6.Y1, 0*height, 
                 System.Windows.Media.Brushes.Black, 1); 
             this._MainWindow.MainCanvas.Children.Add(line19);
             
@@ -282,6 +283,14 @@ namespace StreetRacing.ViewModel
             floor.Add(new Point(line9.X2, line9.Y2)); 
             floor.Add(new Point(line11.X1, line11.Y1)); 
             this.FillColor(floor, System.Windows.Media.Brushes.OliveDrab); 
+
+            // Roof 
+            List<Point> roof = new List<Point>(); 
+            roof.Add(new Point(0, 0)); 
+            roof.Add(new Point(line23.X1, line23.Y1)); 
+            roof.Add(new Point(line23.X2, line23.Y2)); 
+            roof.Add(new Point(width, 0)); 
+            this.FillColor(roof, System.Windows.Media.Brushes.Gray); 
         }
         #endregion  // Drawing
 
@@ -296,6 +305,7 @@ namespace StreetRacing.ViewModel
             myPath.Fill = color;
             myPath.Stroke = System.Windows.Media.Brushes.Black;
             myPath.StrokeThickness = 1;
+            Canvas.SetZIndex(myPath, 1); 
 
             PathFigure pathFigure = new PathFigure();
             pathFigure.StartPoint = new Point(points[0].X, points[0].Y);

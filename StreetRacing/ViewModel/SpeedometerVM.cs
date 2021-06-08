@@ -155,6 +155,9 @@ namespace StreetRacing.ViewModel
         /// </summary>
         private void DrawSpeedometerArc()
         {
+            // Set Z-index to avoid hiding speedometer arc by other elements and filling
+            Canvas.SetZIndex(this._MainWindow.SpeedometerArrow, 2); 
+            
             // Define coordinates of a line for convinience 
             double X1 = this._MainWindow.SpeedometerArrow.X1; 
             double X2 = this._MainWindow.SpeedometerArrow.X2; 
@@ -243,9 +246,8 @@ namespace StreetRacing.ViewModel
                 yLabel = Y1 - (r * 1.2) * System.Math.Sin(radians); 
                 
                 // Add new point to the canvas 
-                Line myLine = WpfElements.CreateLine(x1, x2, y1, y2, 
-                    System.Windows.Media.Brushes.Black, 1
-                ); 
+                Line myLine = WpfElements.CreateLine(x1, x2, y1, y2, System.Windows.Media.Brushes.Black, 1); 
+                Canvas.SetZIndex(myLine, 2); 
                 this._MainWindow.MainCanvas.Children.Add(myLine); 
 
                 // Add labels
@@ -256,8 +258,8 @@ namespace StreetRacing.ViewModel
                 double fontSize = 8; 
                 TextBlock textBlock = WpfElements.CreateTextBlockOnCanvas(
                     $"{SpeedKmPerHour}", System.Windows.Media.Brushes.Black, 
-                    x, y, width, height, fontSize
-                ); 
+                    x, y, width, height, fontSize); 
+                Canvas.SetZIndex(textBlock, 2); 
                 this._MainWindow.MainCanvas.Children.Add(textBlock);
             }
 
