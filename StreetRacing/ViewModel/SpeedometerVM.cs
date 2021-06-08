@@ -157,6 +157,7 @@ namespace StreetRacing.ViewModel
         {
             // Set Z-index to avoid hiding speedometer arc by other elements and filling
             Canvas.SetZIndex(this._MainWindow.SpeedometerArrow, 2); 
+            Canvas.SetZIndex(this._MainWindow.SpeedometerArc, 2); 
             
             // Define coordinates of a line for convinience 
             double X1 = this._MainWindow.SpeedometerArrow.X1; 

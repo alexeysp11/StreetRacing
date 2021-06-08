@@ -1,4 +1,7 @@
+using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Controls; 
+using System.Windows.Media; 
 using System.Windows.Shapes; 
 
 namespace StreetRacing.VisualElements
@@ -111,5 +114,39 @@ namespace StreetRacing.VisualElements
             Canvas.SetTop(myRect, y); 
             return myRect; 
         }
+
+        #region Filling a color
+        /// <summary>
+        /// Allows to fill a color at runtime using Path 
+        /// </summary>
+        public static void FillColorBetweenPoints(Path myPath, Canvas canvas, List<Point> points, System.Windows.Media.Brush color)
+        {
+            // Create Path
+            myPath.Fill = color;
+            myPath.Stroke = System.Windows.Media.Brushes.Black;
+            myPath.StrokeThickness = 1;
+            Canvas.SetZIndex(myPath, 1); 
+
+            PathFigure pathFigure = new PathFigure();
+            pathFigure.StartPoint = new Point(points[0].X, points[0].Y);
+
+            for (int i = 1; i < points.Count; i++)
+            {
+                LineSegment lineSegment = new LineSegment();
+                lineSegment.Point = new Point(points[i].X, points[i].Y);
+                pathFigure.Segments.Add(lineSegment);
+            }
+
+            PathGeometry pathGeometry = new PathGeometry();
+            pathGeometry.Figures = new PathFigureCollection();
+
+            pathFigure.IsClosed = true;
+            pathGeometry.Figures.Add(pathFigure);
+
+            myPath.Data = pathGeometry;
+            
+            canvas.Children.Add(myPath); 
+        }
+        #endregion  // Filling a color
     }
 }

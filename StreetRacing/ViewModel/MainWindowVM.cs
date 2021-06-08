@@ -50,10 +50,10 @@ namespace StreetRacing.ViewModel
         #region Methods
         public void DrawVisualElements()
         {
+            this.RoadVM.DrawRoad(); 
             this.CabinVM.DrawCabinOnCanvas(); 
             this.SpeedometerVM.DrawVisualElementsOfSpeedometer(); 
             this.SteeringWheelVM.DrawSteeringWheelOnCanvas(); 
-            this.RoadVM.DrawRoad(); 
             this.MapVM.DrawMap(); 
         }
         #endregion  // Methods
