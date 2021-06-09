@@ -1,8 +1,6 @@
 # StreetRacing
 
-`StreetRacing` is a project written in `C#` using **MVVM** pattern. 
-
-![2021-06-08_2](Docs/img/2021-06-08_2.png)
+`StreetRacing` is a project that is written in `C#` with **WPF** using **MVVM** pattern. 
 
 ## How to use
 
