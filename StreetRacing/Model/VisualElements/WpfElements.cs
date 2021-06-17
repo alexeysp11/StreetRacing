@@ -80,7 +80,7 @@ namespace StreetRacing.VisualElements
             double canvasLeft, string name)
         {
             Ellipse myEllipse = new Ellipse();
-            myEllipse.Name=name; 
+            myEllipse.Name = name; 
             myEllipse.Stroke = strokeColor;
             myEllipse.StrokeThickness = strokeThickness;
             myEllipse.Fill = fillColor;
@@ -117,12 +117,16 @@ namespace StreetRacing.VisualElements
 
         #region Filling a color
         /// <summary>
-        /// Allows to fill a color at runtime using Path 
+        /// Allows to fill a color at runtime using Path and adds Path on the canvas 
         /// </summary>
-        public static void FillColorBetweenPoints(Path myPath, Canvas canvas, List<Point> points, System.Windows.Media.Brush color)
+        /// <param name="myPath">Closed path</param>
+        /// <param name="canvas">Instance of Canvas</param>
+        /// <param name="points">List of points of a path</param>
+        /// <param name="fillColor">Color of filling</param>
+        public static void FillColorBetweenPoints(Path myPath, Canvas canvas, List<Point> points, System.Windows.Media.Brush fillColor)
         {
             // Create Path
-            myPath.Fill = color;
+            myPath.Fill = fillColor;
             myPath.Stroke = System.Windows.Media.Brushes.Black;
             myPath.StrokeThickness = 1;
             Canvas.SetZIndex(myPath, 1); 
