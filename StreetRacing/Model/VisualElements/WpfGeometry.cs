@@ -104,7 +104,9 @@ namespace StreetRacing.VisualElements
         }
 
         /// <summary>
-        /// Rotates a point using distance to the center of rotation and angle in radians
+        /// Rotates a point using distance to the center of rotation and angle in radians. 
+        /// Calculates rotation angle relative to static unit circle, not delta (so storing  
+        /// rotation angle of a point in external classes is recomended). 
         /// </summary>
         /// <param name="distance">Radius of rotation</param>
         /// <param name="radians">Angle of rotation in radians</param>
@@ -122,28 +124,60 @@ namespace StreetRacing.VisualElements
         /// </summary>
         /// <param name="distance1">Distance between first point of a line and some center point</param>
         /// <param name="distance2">Distance between second point of a line and some center point</param>
-        /// <param name="radians">Angle of rotation in radians</param>
+        /// <param name="radians1">Angle of rotation of first point of a line (in radians)</param>
+        /// <param name="radians2">Angle of rotation of second point of a line (in radians)</param>
         /// <param name="line">Line that needs to be rotated</param>
         /// <param name="xCenter">X-coordinate of center of rotation</param>
         /// <param name="xCenter">Y-coordinate of center of rotation</param>
         /// <returns>Instance of Line</returns>
-        public static Line RotateLine(double distance1, double distance2, 
-            double radians, Line line, double xCenter, double yCenter)
+        public static Line RotateLine(double distance1, double distance2, double radians1, 
+            double radians2, Line line, double xCenter, double yCenter)
         {
-            double X1 = line.X1; 
-            double X2 = line.X2; 
-            double Y1 = line.Y1; 
-            double Y2 = line.Y2; 
+            try
+            {
+                // Initialize coordinates of end points 
+                double X1 = 0; 
+                double X2 = 0; 
+                double Y1 = 0; 
+                double Y2 = 0; 
 
-            WpfGeometry.RotatePoint(distance1, radians, out X1, out Y1); 
-            WpfGeometry.RotatePoint(distance2, radians, out X2, out Y2); 
+                // Calculate new coordinates of the end points of a line 
+                WpfGeometry.RotatePoint(distance1, radians1, out X1, out Y1); 
+                WpfGeometry.RotatePoint(distance2, radians2, out X2, out Y2); 
 
-            line.X1 = xCenter + X1; 
-            line.X2 = xCenter + X2; 
-            line.Y1 = yCenter + Y1; 
-            line.Y2 = yCenter + Y2; 
-
+                // Set new coordinates of end points of a line 
+                line.X1 = xCenter + X1; 
+                line.X2 = xCenter + X2; 
+                line.Y1 = yCenter + Y1; 
+                line.Y2 = yCenter + Y2; 
+            }
+            catch (System.Exception e)
+            {
+                System.Windows.MessageBox.Show($"Exception inside WpfGeometry.RotateLine:\n{e}", "Exception"); 
+            }
+            
             return line;
+        }
+
+        /// <summary>
+        /// Allows to get angle of a point on the circle with some radius 
+        /// </summary>
+        /// <param name="distanceFromCenter">Radius of the circle</param>
+        /// <param name="x">X-coordinate of the point</param>
+        /// <param name="y">Y-coordinate of the point</param>
+        /// <returns>Angle on the unit circle (in radians)</returns>
+        public static double GetAngleOnCircle(double distanceFromCenter, double x, double y)
+        {
+            double radiansAcos = System.Math.Acos(x / distanceFromCenter); 
+            double radiansAsin = System.Math.Asin(y / distanceFromCenter); 
+            if (WpfGeometry.AreEqual(radiansAcos, radiansAsin, 0.0001))
+            {
+                return radiansAsin; 
+            }
+            else
+            {
+                throw new System.ArgumentException($"Point ({x}, {y}) is not on the circle (acos = {radiansAcos} rad, asin = {radiansAsin}rad)"); 
+            }
         }
         #endregion  // Roation
 
@@ -260,5 +294,26 @@ namespace StreetRacing.VisualElements
             return radians * 180 / System.Math.PI; 
         }
         #endregion  // Angle conversion 
+
+        #region Comparison
+        /// <summary>
+        /// Allows to compare two floating point values with some tolerance 
+        /// </summary>
+        /// <param name="value1">First floating point value</param>
+        /// <param name="value2">Second floating point value</param>
+        /// <param name="tolerance">Floating point value of tolerance</param>
+        /// <returns></returns>
+        public static bool AreEqual(double value1, double value2, double tolerance)
+        {
+            if ((value1 - value2) <= tolerance)
+            {
+                return true; 
+            }
+            else
+            {
+                return false; 
+            }
+        }
+        #endregion  // Comparison
     }
 }

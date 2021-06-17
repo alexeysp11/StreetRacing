@@ -396,19 +396,19 @@ namespace StreetRacing.ViewModel
                 Canvas.GetLeft(this.MiddleEllipse), YCenter, YCenter) - 1; 
             double distance2 = WpfGeometry.DistanceBetweenTwoPoints(XCenter, 
                 Canvas.GetLeft(this.OuterEllipse), YCenter, YCenter) - 5; 
-            LeftLowerLine = WpfGeometry.RotateLine(distance1, distance2, radians, LeftLowerLine, XCenter, YCenter); 
+            LeftLowerLine = WpfGeometry.RotateLine(distance1, distance2, radians, radians, LeftLowerLine, XCenter, YCenter); 
 
             // Rotate left upper part of steering wheel
             radians = WpfGeometry.DegreesToRadians(AngleOfSteeringWheel + AngleOfLeftUpperLine);     
-            LeftUpperLine = WpfGeometry.RotateLine(distance1, distance2, radians, LeftUpperLine, XCenter, YCenter); 
+            LeftUpperLine = WpfGeometry.RotateLine(distance1, distance2, radians, radians, LeftUpperLine, XCenter, YCenter); 
 
             // Rotate right lower part of steering wheel 
             radians = WpfGeometry.DegreesToRadians(AngleOfSteeringWheel + AngleOfRightLowerLine);     
-            RightLowerLine = WpfGeometry.RotateLine(distance1, distance2, radians, RightLowerLine, XCenter, YCenter); 
+            RightLowerLine = WpfGeometry.RotateLine(distance1, distance2, radians, radians, RightLowerLine, XCenter, YCenter); 
             
             // Rotate right upper part of steering wheel 
             radians = WpfGeometry.DegreesToRadians(AngleOfSteeringWheel + AngleOfRightUpperLine);     
-            RightUpperLine = WpfGeometry.RotateLine(distance1, distance2, radians, RightUpperLine, XCenter, YCenter); 
+            RightUpperLine = WpfGeometry.RotateLine(distance1, distance2, radians, radians, RightUpperLine, XCenter, YCenter); 
 
             // Rotate bottom left part of steering wheel 
             radians = WpfGeometry.DegreesToRadians(AngleOfSteeringWheel - AngleOfBottomLeftLine); 
@@ -416,11 +416,11 @@ namespace StreetRacing.ViewModel
                 YCenter, Canvas.GetTop(MiddleEllipse)); 
             distance2 = WpfGeometry.DistanceBetweenTwoPoints(XCenter, XCenter, 
                 YCenter, Canvas.GetTop(OuterEllipse)); 
-            BottomLeftLine = WpfGeometry.RotateLine(distance1, distance2, radians, BottomLeftLine, XCenter, YCenter); 
+            BottomLeftLine = WpfGeometry.RotateLine(distance1, distance2, radians, radians, BottomLeftLine, XCenter, YCenter); 
 
             // Rotate bottom right part of steering wheel 
             radians = WpfGeometry.DegreesToRadians(AngleOfSteeringWheel - AngleOfBottomRightLine);     
-            BottomRightLine = WpfGeometry.RotateLine(distance1, distance2, radians, BottomRightLine, XCenter, YCenter); 
+            BottomRightLine = WpfGeometry.RotateLine(distance1, distance2, radians, radians, BottomRightLine, XCenter, YCenter); 
         }
 
         /// <summary>
