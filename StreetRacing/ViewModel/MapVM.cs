@@ -2,6 +2,9 @@ using StreetRacing.View;
 
 namespace StreetRacing.ViewModel
 {
+    /// <summary>
+    /// Class for interacting with a map 
+    /// </summary>
     public class MapVM
     {
         #region Members
@@ -12,6 +15,10 @@ namespace StreetRacing.ViewModel
         #endregion  // Members
 
         #region Constructor
+        /// <summary>
+        /// Constructor of MapVM
+        /// </summary>
+        /// <param name="window">Instance of MainWindow</param>
         public MapVM(MainWindow window)
         {
             _MainWindow = window; 

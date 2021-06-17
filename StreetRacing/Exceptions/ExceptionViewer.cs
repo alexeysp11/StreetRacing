@@ -1,7 +1,14 @@
 namespace StreetRacing.Exceptions
 {
+    /// <summary>
+    /// Class that allows to display exceptions
+    /// </summary>
     public static class ExceptionViewer
     {
+        /// <summary>
+        /// Static method for displaying an exception using MessageBox 
+        /// </summary>
+        /// <param name="e">Exception that needs to be displayed</param>
         public static void WatchExceptionMessageBox(System.Exception e)
         {
             var st = new System.Diagnostics.StackTrace(e, true);

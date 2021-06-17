@@ -9,6 +9,9 @@ using StreetRacing.VisualElements;
 
 namespace StreetRacing.ViewModel
 {
+    /// <summary>
+    /// Class for interacting with cabin of a car 
+    /// </summary>
     public class CabinVM
     {
         #region Members
@@ -19,6 +22,10 @@ namespace StreetRacing.ViewModel
         #endregion  // Members
 
         #region Constructor
+        /// <summary>
+        /// Constructor of CabinVM
+        /// </summary>
+        /// <param name="window">Instance of MainWindow</param>
         public CabinVM(MainWindow window)
         {
             // MainWindow instance to acces all elements on the canvas

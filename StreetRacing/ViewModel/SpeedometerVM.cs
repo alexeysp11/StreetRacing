@@ -12,7 +12,7 @@ using StreetRacing.VisualElements;
 namespace StreetRacing.ViewModel
 {
     /// <summary>
-    /// Allows to use speedometer 
+    /// Calss that allows to use speedometer 
     /// </ssummary>
     public class SpeedometerVM
     {
@@ -79,6 +79,10 @@ namespace StreetRacing.ViewModel
         #endregion  // Properties
 
         #region Constructor
+        /// <summary>
+        /// Constructor of SpeedometerVM
+        /// </summary>
+        /// <param name="window">Instance of MainWindow</param>
         public SpeedometerVM(MainWindow window)
         {
             // Command to regulate speed on speedometer 

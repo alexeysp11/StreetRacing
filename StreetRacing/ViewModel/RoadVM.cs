@@ -6,6 +6,9 @@ using StreetRacing.VisualElements;
 
 namespace StreetRacing.ViewModel
 {
+    /// <summary>
+    /// Class for drawing a road on the canvas  
+    /// </summary>
     public class RoadVM
     {
         #region Members
@@ -16,6 +19,10 @@ namespace StreetRacing.ViewModel
         #endregion  // Members
 
         #region Constructor
+        /// <summary>
+        /// Constructor of RoadVM
+        /// </summary>
+        /// <param name="window">Instance of MainWindow</param>
         public RoadVM(MainWindow window)
         {
             // MainWindow instance to acces all elements on the canvas

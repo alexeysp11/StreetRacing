@@ -5,6 +5,9 @@ using StreetRacing.VisualElements;
 
 namespace Test.StreetRacing.VisualElements
 {
+    /// <summary>
+    /// Class for testing RectangleWithLines
+    /// </summary>
     public class RectangleWithLinesTest
     {
         [Fact]

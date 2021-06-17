@@ -13,7 +13,7 @@ using StreetRacing.Exceptions;
 namespace StreetRacing.ViewModel
 {
     /// <summary>
-    /// Allows to use steering wheel 
+    /// Class that allows to use steering wheel 
     /// </summary>
     public class SteeringWheelVM
     {
@@ -203,6 +203,10 @@ namespace StreetRacing.ViewModel
         #endregion  // Properties of lines
 
         #region Constructor
+        /// <summary>
+        /// Constructor of SteeringWheelVM
+        /// </summary>
+        /// <param name="window">Instance of MainWindow</param>
         public SteeringWheelVM(MainWindow window)
         {
             // MainWindow instance to acces all elements on the canvas
