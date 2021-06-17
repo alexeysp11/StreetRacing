@@ -94,11 +94,13 @@ namespace StreetRacing.VisualElements
         /// <param name="xPoint">X coordinate of a point</param>
         /// <param name="yPoint">Y coordinate of a point</param>
         /// <param name="radians">Angle of rotation in radians</param>
-        public static void RotatePoint(ref double xPoint, ref double yPoint, 
-            double radians)
+        public static void RotatePoint(ref double xPoint, ref double yPoint, double radians)
         {
-            xPoint = xPoint * System.Math.Cos(radians) - yPoint * System.Math.Sin(radians); 
-            yPoint = xPoint * System.Math.Sin(radians) + yPoint * System.Math.Cos(radians); 
+            double xBefore = xPoint; 
+            double yBefore = yPoint; 
+
+            xPoint = xBefore * System.Math.Cos(radians) - yBefore * System.Math.Sin(radians); 
+            yPoint = xBefore * System.Math.Sin(radians) + yBefore * System.Math.Cos(radians); 
         }
 
         /// <summary>
